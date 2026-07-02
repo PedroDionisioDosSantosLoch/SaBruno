@@ -17,7 +17,7 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
     const novoRegistro = await Enrollments.create(req.body);
-    res.status(201).json(novoRegistro);
+    res.status(201).json({ novoRegistro, message: 'Registro criado com sucesso' });
 };
 
 const update = async (req, res) => {
@@ -28,7 +28,7 @@ const update = async (req, res) => {
     }
 
     await data.update(req.body);
-    res.json(data);
+    res.json({ data, message: 'Registro atualizado com sucesso' });
 };
 
 const remove = async (req, res) => {
