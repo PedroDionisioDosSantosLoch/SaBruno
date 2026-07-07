@@ -1,32 +1,32 @@
-import {DataTypes} from 'sequelize';
+import { DataTypes } from 'sequelize';
 
-const Enrollment=database.define('Enrollment',{
-    id:{
+const Enrollment = database.define('Enrollment', {
+    id: {
         type: DataTypes.INTEGER,
-        primaryKey:true,
-        autoIncrement:true,
-        allowNull:false
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
     },
-    name:{
+    name: {
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull: false
     },
-    endereco:{
+    endereco: {
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull: false
     },
-    sala:{
+    sala: {
         type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull: false
     },
-    email:{
+    email: {
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull: false
     },
-    senha:{
+    senha: {
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull: false
     }
 })
 
-module.exports=Enrollment;
+module.exports = Enrollment;
