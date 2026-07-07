@@ -8,7 +8,7 @@ export default function DashboardLayout() {
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside className="w-60 bg-slate-900 text-white p-5">
-        <h1 className="!text-white text-2xl font-bold mb-8">Senai</h1>
+        <h1 className="text-white text-2xl font-bold mb-8">Senai</h1>
 
         <nav className="space-y-2">
           <NavLink to="/dashboard" end className={linkClass}>

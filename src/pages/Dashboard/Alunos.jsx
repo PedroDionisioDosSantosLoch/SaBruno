@@ -1,4 +1,3 @@
-// Alunos.jsx
 export default function Alunos() {
   // depois: useEffect + fetch('http://localhost:5173/students')
   return (
