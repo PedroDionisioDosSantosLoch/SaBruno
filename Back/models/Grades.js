@@ -9,7 +9,7 @@ const Grades=database.define('Grades',{
         allowNull:false
     },
     student:{
-        type: Datatypes.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull:false,
         references:{
             model:'Student',
