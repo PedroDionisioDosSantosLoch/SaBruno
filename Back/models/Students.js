@@ -1,6 +1,7 @@
 import {DataTypes} from 'sequelize';
 import database from '../config/database.js';
 
+
 const Student=database.define('Student',{
     id:{
         type: DataTypes.INTEGER,
