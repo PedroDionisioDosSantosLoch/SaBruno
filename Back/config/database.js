@@ -1,7 +1,7 @@
-const { Sequelize } = require('sequelize');
+import  Sequelize  from 'sequelize';
 
 const sequelize = new Sequelize(
-  'database',
+  'escoladb',
   'root',
   'senai',
   {
@@ -10,4 +10,4 @@ const sequelize = new Sequelize(
   }
 );
 
-module.exports = sequelize;
+export default sequelize;

@@ -1,23 +1,32 @@
-import {DataTypes} from 'sequelize';
+import { DataTypes } from 'sequelize';
 import Student from './Students.js';
+import database from '../config/database.js';
 
-const Grades=database.define('Grades',{
-    id:{
+const Grades = database.define('Grades', {
+    id: {
         type: DataTypes.INTEGER,
-        primaryKey:true,
-        autoIncrement:true,
-        allowNull:false
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
     },
-    student:{
+    student: {
         type: DataTypes.INTEGER,
-        allowNull:false,
-        references:{
-            model:'Student',
-            key:'id'
+        allowNull: false,
+        references: {
+            model: Student,
+            key: 'id'
         }
     }
-})
-Student.hasMany(Grades,{foreignKey:'student', as:'grades'});
-Grades.belongsTo(Student,{foreignKey:'student', as:'student'});
+});
 
-module.exports=Grades;
+Student.hasMany(Grades, {
+    foreignKey: 'student',
+    as: 'Grades'
+});
+
+Grades.belongsTo(Student, {
+    foreignKey: 'student',
+    as: 'Student'
+});
+
+export default Grades;

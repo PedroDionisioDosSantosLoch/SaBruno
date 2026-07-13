@@ -1,11 +1,11 @@
-const Classes = require('../models/Classes');
+import Classes from '../models/Classes.js';
 
-const getAll = async (req, res) => {
-    const data = await Classes.findAll();
-    res.json(data);
-};
-
-const getById = async (req, res) => {
+const ClassesController = {
+    getAllClasses: async (req, res) => {
+        const data = await Classes.findAll();
+        res.json(data);
+    },
+    getClassById: async (req, res) => {
     const data = await Classes.findByPk(req.params.id);
 
     if (!data) {
@@ -13,14 +13,14 @@ const getById = async (req, res) => {
     }
 
     res.json(data);
-};
+},
 
-const create = async (req, res) => {
-    const novoRegistro = await Classes.create(req.body);
-    res.status(201).json({ novoRegistro, message: 'Classe criada com sucesso' });
-};
+    createClass: async (req, res) => {
+        const novoRegistro = await Classes.create(req.body);
+        res.status(201).json({ novoRegistro, message: 'Classe criada com sucesso' });
+    },
 
-const update = async (req, res) => {
+    updateClass: async (req, res) => {
     const data = await Classes.findByPk(req.params.id);
 
     if (!data) {
@@ -29,9 +29,9 @@ const update = async (req, res) => {
 
     await data.update(req.body);
     res.json({ data, message: 'Classe atualizada com sucesso' });
-};
+},
 
-const remove = async (req, res) => {
+    deleteClass: async (req, res) => {
     const data = await Classes.findByPk(req.params.id);
 
     if (!data) {
@@ -40,12 +40,7 @@ const remove = async (req, res) => {
 
     await data.destroy();
     res.json({ message: 'Classe removida com sucesso' });
-};
+},
+}
 
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove
-};
+export default ClassesController;

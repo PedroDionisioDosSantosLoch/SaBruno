@@ -1,18 +1,14 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+import Router from  'express'
 
-const {
-    getAllEnrollments,
-    getEnrollmentById,
-    createEnrollment,
-    updateEnrollment,
-    deleteEnrollment
-} = require('../controllers/EnrollmentsController');
+import EnrollmentsController from '../controllers/EnrollmentsController.js';
 
-router.get('/', getAllEnrollments);
-router.get('/:id', getEnrollmentById);
-router.post('/', createEnrollment);
-router.put('/:id', updateEnrollment);
-router.delete('/:id', deleteEnrollment);
+const router = Router();
 
-module.exports = router;
+router.get('/', EnrollmentsController.getAllEnrollments);
+router.get('/:id', EnrollmentsController.getEnrollmentById);
+router.post('/', EnrollmentsController.createEnrollment);
+router.put('/:id', EnrollmentsController.updateEnrollment);
+router.delete('/:id', EnrollmentsController.deleteEnrollment);
+
+export default router;

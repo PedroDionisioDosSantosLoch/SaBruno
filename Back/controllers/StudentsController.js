@@ -1,27 +1,28 @@
-const Students = require('../models/Students');
+import Students from '../models/Students.js'
 
-const getAll = async (req, res) => {
-    const data = await Students.findAll();
-    res.json(data);
-};
+const StudentsController = {
+    getAllStudents: async (req, res) => {
+        const data = await Students.findAll();
+        res.json(data);
+    },
 
-const getById = async (req, res) => {
-    const data = await Students.findByPk(req.params.id);
+    getStudentById: async (req, res) => {
+        const data = await Students.findByPk(req.params.id);
 
     if (!data) {
         return res.status(404).json({ message: 'Estudante não encontrado' });
     }
 
-    res.json(data);
-};
+        res.json(data);
+    },
 
-const create = async (req, res) => {
-    const novoRegistro = await Students.create(req.body);
-    res.status(201).json({ novoRegistro, message: 'Estudante criado com sucesso' });
-};
+    createStudent: async (req, res) => {
+        const novoRegistro = await Students.create(req.body);
+        res.status(201).json({ novoRegistro, message: 'Estudante criado com sucesso' });
+    },
 
-const update = async (req, res) => {
-    const data = await Students.findByPk(req.params.id);
+    updateStudent: async (req, res) => {
+        const data = await Students.findByPk(req.params.id);
 
     if (!data) {
         return res.status(404).json({ message: 'Estudante não encontrado' });
@@ -29,9 +30,9 @@ const update = async (req, res) => {
 
     await data.update(req.body);
     res.json({ data, message: 'Estudante atualizado com sucesso' });
-};
+},
 
-const remove = async (req, res) => {
+    deleteStudent: async (req, res) => {
     const data = await Students.findByPk(req.params.id);
 
     if (!data) {
@@ -40,12 +41,7 @@ const remove = async (req, res) => {
 
     await data.destroy();
     res.json({ message: 'Estudante removido com sucesso' });
-};
+},
+}
 
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove
-};
+export default StudentsController;

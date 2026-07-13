@@ -1,4 +1,5 @@
-import { DataTypes } from 'sequelize';
+import  DataTypes  from 'sequelize';
+import database from '../config/database.js';
 
 const Enrollment = database.define('Enrollment', {
     id: {
@@ -29,4 +30,4 @@ const Enrollment = database.define('Enrollment', {
     }
 })
 
-module.exports = Enrollment;
+export default Enrollment;

@@ -1,10 +1,10 @@
-const express = require('express');
-const sequelize = require('./config/database');
-
-const StudentsRoutes = require('./routes/StudentsRoutes');
-const ClassesRoutes = require('./routes/ClassesRoutes');
-const EnrollmentsRoutes = require('./routes/EnrollmentsRoutes');
-const GradesRoutes = require('./routes/GradesRoutes');
+import express from "express";
+import database from "./config/database.js";
+import sequelize from "./config/database.js";
+import StudentsRoutes from './routes/StudentsRoutes.js';
+import ClassesRoutes from './routes/ClassesRoutes.js';
+import EnrollmentsRoutes from './routes/EnrollmentsRoutes.js';
+import GradesRoutes from './routes/GradesRoutes.js';
 
 const app = express();
 

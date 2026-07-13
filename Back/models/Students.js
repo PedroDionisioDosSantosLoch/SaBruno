@@ -1,4 +1,5 @@
 import {DataTypes} from 'sequelize';
+import database from '../config/database.js';
 
 const Student=database.define('Student',{
     id:{
@@ -17,4 +18,5 @@ const Student=database.define('Student',{
     }
 })
 
-module.exports=Student;
+
+export default Student;

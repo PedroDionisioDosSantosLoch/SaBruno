@@ -1,51 +1,44 @@
-const Enrollments = require('../models/Enrollments');
+import Enrollments from '../models/Enrollments.js';
 
-const getAll = async (req, res) => {
-    const data = await Enrollments.findAll();
-    res.json(data);
-};
-
-const getById = async (req, res) => {
-    const data = await Enrollments.findByPk(req.params.id);
+const EnrollmentsController = {
+    getAllEnrollments: async (req, res) => {
+        const data = await Enrollments.findAll();
+        res.json(data);
+    },
+    getEnrollmentById: async (req, res) => {
+        const data = await Enrollments.findByPk(req.params.id);
 
     if (!data) {
-        return res.status(404).json({ message: 'Registro não encontrado' });
+        return res.status(404).json({ message: 'Matrícula não encontrada' });
     }
 
     res.json(data);
-};
-
-const create = async (req, res) => {
+},
+    createEnrollment: async (req, res) => {
     const novoRegistro = await Enrollments.create(req.body);
-    res.status(201).json({ novoRegistro, message: 'Registro criado com sucesso' });
-};
+    res.status(201).json({ novoRegistro, message: 'Matrícula criada com sucesso' });
+},
 
-const update = async (req, res) => {
+updateEnrollment: async (req, res) => {
     const data = await Enrollments.findByPk(req.params.id);
 
     if (!data) {
-        return res.status(404).json({ message: 'Registro não encontrado' });
+        return res.status(404).json({ message: 'Matrícula não encontrada' });
     }
 
     await data.update(req.body);
-    res.json({ data, message: 'Registro atualizado com sucesso' });
-};
+    res.json({ data, message: 'Matrícula atualizada com sucesso' });
+},
 
-const remove = async (req, res) => {
+    deleteEnrollment: async (req, res) => {
     const data = await Enrollments.findByPk(req.params.id);
 
     if (!data) {
-        return res.status(404).json({ message: 'Registro não encontrado' });
+        return res.status(404).json({ message: 'Matrícula não encontrada' });
     }
 
     await data.destroy();
-    res.json({ message: 'Registro removido com sucesso' });
-};
-
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove
-};
+    res.json({ message: 'Matrícula removida com sucesso' });
+},
+}
+export default EnrollmentsController

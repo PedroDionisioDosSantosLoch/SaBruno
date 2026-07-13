@@ -1,18 +1,14 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+import Router from 'express'
 
-const {
-    getAllGrades,
-    getGradeById,
-    createGrade,
-    updateGrade,
-    deleteGrade
-} = require('../controllers/GradesController');
+import GradesController from '../controllers/GradesController.js';
 
-router.get('/', getAllGrades);
-router.get('/:id', getGradeById);
-router.post('/', createGrade);
-router.put('/:id', updateGrade);
-router.delete('/:id', deleteGrade);
+const router = Router();
 
-module.exports = router;
+router.get('/', GradesController.getAllGrades);
+router.get('/:id', GradesController.getGradeById);
+router.post('/', GradesController.createGrade);
+router.put('/:id', GradesController.updateGrade);
+router.delete('/:id', GradesController.deleteGrade);
+
+export default router;
