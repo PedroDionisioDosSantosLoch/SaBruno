@@ -1,5 +1,6 @@
-import {DataTypes} from 'sequelize';
-import Student from './Students.js';
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+const Student = require('./Students.js')
 
 const Grades=database.define('Grades',{
     id:{

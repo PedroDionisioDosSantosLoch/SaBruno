@@ -1,4 +1,5 @@
-import {DataTypes} from 'sequelize';
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
 const Student=database.define('Student',{
     id:{
