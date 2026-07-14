@@ -10,7 +10,7 @@ const Grades = database.define('Grades', {
         autoIncrement: true,
         allowNull: false
     },
-    student: {
+    studentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -21,12 +21,12 @@ const Grades = database.define('Grades', {
 });
 
 Student.hasMany(Grades, {
-    foreignKey: 'student',
+    foreignKey: 'studentId',
     as: 'Grades'
 });
 
 Grades.belongsTo(Student, {
-    foreignKey: 'student',
+    foreignKey: 'studentId',
     as: 'Student'
 });
 
