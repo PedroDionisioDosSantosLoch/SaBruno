@@ -1,5 +1,5 @@
-import { DataTypes } from require('sequelize');
-import sequelize from require('../config/database.js');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
 const User = sequelize.define('User', {
     id: {
