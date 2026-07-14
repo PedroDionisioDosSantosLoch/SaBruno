@@ -16,6 +16,10 @@ const Student=database.define('Student',{
     sala:{
         type: DataTypes.INTEGER,
         allowNull:false
+    },
+    endereco:{
+        type: DataTypes.STRING,
+        allowNull:false
     }
 })
 

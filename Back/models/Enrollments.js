@@ -11,26 +11,6 @@ const Enrollment = database.define('Enrollment', {
         autoIncrement: true,
         allowNull: false
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    endereco: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    sala: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    senha: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     studentId:{
         type: DataTypes.INTEGER,
         allowNull: false,
