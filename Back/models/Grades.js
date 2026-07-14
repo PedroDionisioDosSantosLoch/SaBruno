@@ -10,6 +10,10 @@ const Grades = database.define('Grades', {
         autoIncrement: true,
         allowNull: false
     },
+    nota:{
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
     studentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
