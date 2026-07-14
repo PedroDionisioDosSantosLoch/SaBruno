@@ -6,16 +6,18 @@ import ClassesRoutes from './routes/ClassesRoutes.js';
 import EnrollmentsRoutes from './routes/EnrollmentsRoutes.js';
 import GradesRoutes from './routes/GradesRoutes.js';
 import UserRoutes from './routes/UserRoutes.js'
+import authMiddleware from "./middleware/authMiddleware.js";
+import roleMiddleware from "./middleware/roleMiddleware.js";
 
 const app = express();
 
 app.use(express.json());
-
-app.use('/students', StudentsRoutes);
-app.use('/classes', ClassesRoutes);
-app.use('/enrollments', EnrollmentsRoutes);
-app.use('/grades', GradesRoutes);
 app.use('/users',UserRoutes)
+
+app.use('/students', authMiddleware,StudentsRoutes);
+app.use('/classes', authMiddleware,ClassesRoutes);
+app.use('/enrollments', authMiddleware,roleMiddleware('admin','professor'),EnrollmentsRoutes);
+app.use('/grades', authMiddleware,roleMiddleware('admin','professor'),GradesRoutes);
 
 sequelize.sync()
     .then(() => {
