@@ -12,7 +12,7 @@ import roleMiddleware from "./middleware/roleMiddleware.js";
 const app = express();
 
 app.use(express.json());
-app.use('/users',authMiddleware,roleMiddleware('admin'),UserRoutes);
+app.use('/users',UserRoutes);
 
 app.use('/students', authMiddleware,StudentsRoutes);
 app.use('/classes', authMiddleware,ClassesRoutes);
