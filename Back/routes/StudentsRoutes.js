@@ -1,10 +1,12 @@
 import express from 'express';
 import Router from  'express';
-
+import { validate, studentSchema } from '../middleware/validation.js';
 import StudentsController from '../controllers/StudentsController.js';
 
 const router = Router();
 
+
+router.post('/', authMiddleware, validate(studentSchema), StudentsController.create);
 router.get('/', StudentsController.getAllStudents);
 router.get('/:id', StudentsController.getStudentById);
 router.post('/', StudentsController.createStudent);
