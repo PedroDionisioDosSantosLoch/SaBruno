@@ -1,4 +1,4 @@
-import  DataTypes  from 'sequelize';
+import  {DataTypes}  from 'sequelize';
 import database from '../config/database.js';
 import Student from './Students.js';
 import Class from './Classes.js';
