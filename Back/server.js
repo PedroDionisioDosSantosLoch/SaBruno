@@ -8,9 +8,10 @@ import GradesRoutes from './routes/GradesRoutes.js';
 import UserRoutes from './routes/UserRoutes.js'
 import authMiddleware from "./middleware/authMiddleware.js";
 import roleMiddleware from "./middleware/roleMiddleware.js";
+import cors from 'cors'
 
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use('/users',UserRoutes);
 
@@ -21,7 +22,7 @@ app.use('/grades', authMiddleware,roleMiddleware('admin','professor'),GradesRout
 
 sequelize.sync()
     .then(() => {
-        app.listen(5173, () => {
+        app.listen(3001, () => {
             console.log('Servidor rodando na porta http://localhost:5173/');
         });
     })
