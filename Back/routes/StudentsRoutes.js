@@ -7,7 +7,7 @@ import authMiddleware from '../middleware/authMiddleware.js';
 const router = Router();
 
 
-router.post('/', authMiddleware, validate(studentSchema), StudentsController.create);
+router.post('/', authMiddleware, validate(studentSchema), StudentsController.createStudent);
 router.get('/', StudentsController.getAllStudents);
 router.get('/:id', StudentsController.getStudentById);
 router.put('/:id', StudentsController.updateStudent);
