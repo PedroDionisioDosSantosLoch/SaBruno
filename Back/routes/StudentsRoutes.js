@@ -2,6 +2,7 @@ import express from 'express';
 import Router from  'express';
 import { validate, studentSchema } from '../middleware/validation.js';
 import StudentsController from '../controllers/StudentsController.js';
+import authMiddleware from '../middleware/AuthMiddleware.js';
 
 const router = Router();
 
