@@ -7,7 +7,7 @@ export default function Notas() {
   const [alunos, setAlunos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [alunoSelecionado, setAlunoSelecionado] = useState('')
+  const [form, setForm] = useState({ nota: '', studentId: '' })
   const [saving, setSaving] = useState(false)
 
   async function loadData() {
@@ -32,20 +32,17 @@ export default function Notas() {
     loadData()
   }, [])
 
-  // O modelo Grades (Back/models/Grades.js) hoje só guarda o id do aluno,
-  // sem disciplina/valor de nota. Por isso o formulário abaixo só permite
-  // vincular um registro de nota a um aluno.
   const nomeDoAluno = (studentId) =>
     alunos.find((a) => a.id === studentId)?.name || `Aluno #${studentId}`
 
   async function handleAdd(e) {
     e.preventDefault()
-    if (!alunoSelecionado) return
+    if (!form.nota || !form.studentId) return
 
     setSaving(true)
     try {
-      await GradesService.create({ student: Number(alunoSelecionado) })
-      setAlunoSelecionado('')
+      await GradesService.create({ nota: Number(form.nota), studentId: Number(form.studentId) })
+      setForm({ nota: '', studentId: '' })
       await loadData()
     } catch (err) {
       setError(err.response?.data?.message || 'Não foi possível lançar a nota')
@@ -66,16 +63,20 @@ export default function Notas() {
   return (
     <div className="bg-white p-5 rounded">
       <h2 className="text-xl font-bold mb-4">Notas</h2>
-      <p className="text-xs text-gray-400 mb-4">
-        O back-end ainda não guarda disciplina/valor da nota, só o vínculo
-        com o aluno. Isso é algo do model Grades (Back/), não alterado aqui
-        por ser fora do escopo do front-end.
-      </p>
 
       <form onSubmit={handleAdd} className="flex gap-2 mb-4">
+        <input
+          type="number"
+          step="0.1"
+          placeholder="Nota"
+          value={form.nota}
+          onChange={(e) => setForm({ ...form, nota: e.target.value })}
+          className="border rounded p-1.5 w-24"
+          required
+        />
         <select
-          value={alunoSelecionado}
-          onChange={(e) => setAlunoSelecionado(e.target.value)}
+          value={form.studentId}
+          onChange={(e) => setForm({ ...form, studentId: e.target.value })}
           className="border rounded p-1.5 flex-1"
           required
         >
@@ -106,6 +107,7 @@ export default function Notas() {
           <thead>
             <tr>
               <th className="text-left">Registro</th>
+              <th className="text-left">Nota</th>
               <th className="text-left">Aluno</th>
               <th className="text-left"></th>
             </tr>
@@ -114,7 +116,8 @@ export default function Notas() {
             {notas.map((nota) => (
               <tr key={nota.id}>
                 <td>#{nota.id}</td>
-                <td>{nota.Student?.name || nomeDoAluno(nota.student)}</td>
+                <td>{nota.nota}</td>
+                <td>{nota.Student?.name || nomeDoAluno(nota.studentId)}</td>
                 <td className="text-right">
                   <button
                     onClick={() => handleDelete(nota.id)}

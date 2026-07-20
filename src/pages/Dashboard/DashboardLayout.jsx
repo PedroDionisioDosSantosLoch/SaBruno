@@ -34,6 +34,12 @@ export default function DashboardLayout() {
             <NavLink to="/dashboard/notas" className={linkClass}>
               Notas
             </NavLink>
+            <NavLink to="/dashboard/matriculas" className={linkClass}>
+              Matrículas
+            </NavLink>
+            <NavLink to="/dashboard/usuarios" className={linkClass}>
+              Usuários
+            </NavLink>
           </nav>
         </div>
 

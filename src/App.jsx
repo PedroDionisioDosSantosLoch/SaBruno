@@ -8,6 +8,8 @@ import DashboardHome from './pages/Dashboard/DashboardHome'
 import Alunos from './pages/Dashboard/Alunos'
 import Turmas from './pages/Dashboard/Turmas'
 import Notas from './pages/Dashboard/Notas'
+import Matriculas from './pages/Dashboard/Matriculas'
+import Usuarios from './pages/Dashboard/Usuarios'
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="alunos" element={<Alunos />} />
             <Route path="turmas" element={<Turmas />} />
             <Route path="notas" element={<Notas />} />
+            <Route path="matriculas" element={<Matriculas />} />
+            <Route path="usuarios" element={<Usuarios />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/login" replace />} />

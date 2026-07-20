@@ -6,7 +6,7 @@ export default function Alunos() {
   const [alunos, setAlunos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [form, setForm] = useState({ name: '', sala: '' })
+  const [form, setForm] = useState({ name: '', sala: '', endereco: '' })
   const [saving, setSaving] = useState(false)
 
   async function loadAlunos() {
@@ -29,12 +29,16 @@ export default function Alunos() {
 
   async function handleAdd(e) {
     e.preventDefault()
-    if (!form.name || !form.sala) return
+    if (!form.name || !form.sala || !form.endereco) return
 
     setSaving(true)
     try {
-      await StudentsService.create({ name: form.name, sala: Number(form.sala) })
-      setForm({ name: '', sala: '' })
+      await StudentsService.create({
+        name: form.name,
+        sala: Number(form.sala),
+        endereco: form.endereco,
+      })
+      setForm({ name: '', sala: '', endereco: '' })
       await loadAlunos()
     } catch (err) {
       setError(err.response?.data?.message || 'Não foi possível cadastrar o aluno')
@@ -73,6 +77,14 @@ export default function Alunos() {
           className="border rounded p-1.5 w-24"
           required
         />
+        <input
+          type="text"
+          placeholder="Endereço"
+          value={form.endereco}
+          onChange={(e) => setForm({ ...form, endereco: e.target.value })}
+          className="border rounded p-1.5 flex-1"
+          required
+        />
         <button
           type="submit"
           disabled={saving}
@@ -94,6 +106,7 @@ export default function Alunos() {
             <tr>
               <th className="text-left">Nome</th>
               <th className="text-left">Sala</th>
+              <th className="text-left">Endereço</th>
               <th className="text-left"></th>
             </tr>
           </thead>
@@ -102,6 +115,7 @@ export default function Alunos() {
               <tr key={aluno.id}>
                 <td>{aluno.name}</td>
                 <td>{aluno.sala}</td>
+                <td>{aluno.endereco}</td>
                 <td className="text-right">
                   <button
                     onClick={() => handleDelete(aluno.id)}
