@@ -4,7 +4,7 @@ import api from './api'
 // Cada um espelha exatamente as rotas já existentes em Back/routes/*.js
 
 export const UsersService = {
-  login: (email, password) => api.post('/users/login', { email, password }),
+  login: (payload) => api.post('/users/login', payload),
   getAll: () => api.get('/users'),
   getById: (id) => api.get(`/users/${id}`),
   register: (payload) => api.post('/users/register', payload),
