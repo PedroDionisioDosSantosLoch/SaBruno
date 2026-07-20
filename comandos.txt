@@ -1,0 +1,5 @@
+http://localhost:3001/users/login
+{
+  "email": "pedro@email.com",
+  "password": "123456"
+}

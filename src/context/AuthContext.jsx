@@ -1,8 +1,13 @@
-import { createContext, useContext, useState, useCallback } from 'react'
-import { UsersService } from '../services/resources'
+import { createContext, useContext, useState } from 'react';
+import { UsersService } from '../services/resources';
 
-const AuthContext = createContext(null)
+const AuthContext = createContext();
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 // Decodifica o "meio" do JWT (o payload) sem precisar de nenhuma lib extra.
 // Um token JWT tem 3 partes separadas por ".": header.payload.assinatura
 function decodeToken(token) {
@@ -11,18 +16,18 @@ function decodeToken(token) {
   return JSON.parse(payloadJson)
 }
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> f8cda5e035c3a0d5f5725b0cc8737d8616819ee7
+>>>>>>> Stashed changes
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem('sabruno_user')
-    return stored ? JSON.parse(stored) : null
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const login = useCallback(async (email, senha) => {
-    setLoading(true)
-    setError(null)
+  const login = async (email, password) => {
     try {
+<<<<<<< Updated upstream
       // 1. Manda email/senha pro back-end, que confere o hash com bcrypt
       //    e devolve um token JWT (contendo id + role) se estiver certo
       const { data } = await UsersService.login(email, senha)
@@ -37,10 +42,51 @@ export function AuthProvider({ children }) {
       const { id } = decodeToken(token)
       const { data: dadosUsuario } = await UsersService.getById(id)
 
+=======
+<<<<<<< HEAD
+      setLoading(true);
+      setError('');
+
+      const { data } = await UsersService.login({
+        email,
+        password,
+      });
+
+      if (!data.user) {
+        setError('E-mail ou senha inválidos');
+        return false;
+      }
+
+      if (data.user.role !== 'admin') {
+        setError('Apenas administradores podem acessar o sistema.');
+        return false;
+      }
+
+      setUser(data.user);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      return true;
+=======
+      // 1. Manda email/senha pro back-end, que confere o hash com bcrypt
+      //    e devolve um token JWT (contendo id + role) se estiver certo
+      const { data } = await UsersService.login(email, senha)
+      const { token } = data
+
+      // 2. Guarda o token — é ele que o interceptor do api.js vai anexar
+      //    em toda requisição daqui pra frente
+      localStorage.setItem('sabruno_token', token)
+
+      // 3. O token só carrega id e role, não o nome. Como o dashboard
+      //    mostra o nome do usuário, buscamos os dados completos.
+      const { id } = decodeToken(token)
+      const { data: dadosUsuario } = await UsersService.getById(id)
+
+>>>>>>> Stashed changes
       const userSemSenha = { ...dadosUsuario }
       delete userSemSenha.password
       localStorage.setItem('sabruno_user', JSON.stringify(userSemSenha))
       setUser(userSemSenha)
+<<<<<<< Updated upstream
 
       return true
     } catch (err) {
@@ -50,7 +96,27 @@ export function AuthProvider({ children }) {
       setLoading(false)
     }
   }, [])
+=======
+>>>>>>> Stashed changes
 
+      return true
+>>>>>>> f8cda5e035c3a0d5f5725b0cc8737d8616819ee7
+    } catch (err) {
+      setError(
+        err.response?.data?.message || 'Erro ao realizar login.'
+      );
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+<<<<<<< HEAD
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+=======
   const logout = useCallback(() => {
     localStorage.removeItem('sabruno_user')
     localStorage.removeItem('sabruno_token')
@@ -58,19 +124,35 @@ export function AuthProvider({ children }) {
   }, [])
 
   const isAuthenticated = Boolean(user)
+>>>>>>> f8cda5e035c3a0d5f5725b0cc8737d8616819ee7
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, error, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        loading,
+        error,
+        isAuthenticated: !!user,
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
+<<<<<<< HEAD
+  return useContext(AuthContext);
+=======
   const ctx = useContext(AuthContext)
   if (!ctx) {
     throw new Error('useAuth precisa ser usado dentro de um AuthProvider')
   }
   return ctx
+<<<<<<< Updated upstream
+=======
+>>>>>>> f8cda5e035c3a0d5f5725b0cc8737d8616819ee7
+>>>>>>> Stashed changes
 }

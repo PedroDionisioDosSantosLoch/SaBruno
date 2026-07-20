@@ -9,17 +9,24 @@ import UserRoutes from './routes/UserRoutes.js'
 import authMiddleware from "./middleware/authMiddleware.js";
 import roleMiddleware from "./middleware/roleMiddleware.js";
 import cors from 'cors'
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+ 
+=======
+>>>>>>> Stashed changes
 
+>>>>>>> f8cda5e035c3a0d5f5725b0cc8737d8616819ee7
 const app = express();
 app.use(cors())
 app.use(express.json());
-app.use('/users',UserRoutes);
-
-app.use('/students', authMiddleware,StudentsRoutes);
-app.use('/classes', authMiddleware,ClassesRoutes);
-app.use('/enrollments', authMiddleware,roleMiddleware('admin','professor'),EnrollmentsRoutes);
-app.use('/grades', authMiddleware,roleMiddleware('admin','professor'),GradesRoutes);
-
+app.use('/users', UserRoutes);
+ 
+app.use('/students', authMiddleware, StudentsRoutes);
+app.use('/classes', authMiddleware, ClassesRoutes);
+app.use('/enrollments', authMiddleware, roleMiddleware('admin', 'professor'), EnrollmentsRoutes);
+app.use('/grades', authMiddleware, roleMiddleware('admin', 'professor'), GradesRoutes);
+ 
 sequelize.sync()
     .then(() => {
         app.listen(3001, () => {
