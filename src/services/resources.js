@@ -8,7 +8,6 @@ export const UsersService = {
   getAll: () => api.get('/users'),
   getById: (id) => api.get(`/users/${id}`),
   register: (payload) => api.post('/users/register', payload),
-  login: (payload) => api.post('/users/login', payload),
   update: (id, payload) => api.put(`/users/${id}`, payload),
   remove: (id) => api.delete(`/users/${id}`),
 }
