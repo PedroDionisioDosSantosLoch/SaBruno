@@ -1,13 +1,14 @@
-import  Sequelize  from 'sequelize';
+import 'dotenv/config';
+import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize(
-  'escoladb',
-  'root',
-  'senai',
-  {
-    host: 'localhost',
-    dialect: 'mysql'
-  }
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+        host: process.env.DB_HOST,
+        dialect: 'mysql'
+    }
 );
 
 export default sequelize;
