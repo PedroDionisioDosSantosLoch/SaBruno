@@ -23,7 +23,7 @@ app.use('/grades', authMiddleware,roleMiddleware('admin','professor'),GradesRout
 sequelize.sync()
     .then(() => {
         app.listen(3001, () => {
-            console.log('Servidor rodando na porta http://localhost:5173/');
+            console.log('Servidor rodando na porta http://localhost:3001/');
         });
     })
     .catch((err) => {
