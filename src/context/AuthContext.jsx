@@ -3,13 +3,14 @@ import { UsersService } from '../services/resources'
 
 const AuthContext = createContext(null)
 
-// IMPORTANTE: o back-end atual (Back/) não tem uma rota de login nem faz hash
-// de senha (ver Back/controllers/UserController.js). Como a tarefa pediu para
-// mexer só no front, o "login" aqui é feito buscando a lista de usuários
-// (GET /users) e comparando e-mail/senha no navegador — e só deixa entrar
-// quem tiver role "admin", já que este app é de acesso restrito ao admin.
-// Não é seguro para produção: o ideal é depois criar uma rota POST
-// /users/login no back que faça essa checagem com a senha criptografada.
+// Decodifica o "meio" do JWT (o payload) sem precisar de nenhuma lib extra.
+// Um token JWT tem 3 partes separadas por ".": header.payload.assinatura
+function decodeToken(token) {
+  const payloadBase64 = token.split('.')[1]
+  const payloadJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'))
+  return JSON.parse(payloadJson)
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem('sabruno_user')
@@ -22,25 +23,25 @@ export function AuthProvider({ children }) {
     setLoading(true)
     setError(null)
     try {
-      const { data: usuarios } = await UsersService.getAll()
-      const encontrado = usuarios.find(
-        (u) => u.email === email && u.password === senha
-      )
+      // 1. Manda email/senha pro back-end, que confere o hash com bcrypt
+      //    e devolve um token JWT (contendo id + role) se estiver certo
+      const { data } = await UsersService.login(email, senha)
+      const { token } = data
 
-      if (!encontrado) {
-        setError('E-mail ou senha inválidos')
-        return false
-      }
+      // 2. Guarda o token — é ele que o interceptor do api.js vai anexar
+      //    em toda requisição daqui pra frente
+      localStorage.setItem('sabruno_token', token)
 
-      if (encontrado.role !== 'admin') {
-        setError('Apenas administradores podem acessar este painel')
-        return false
-      }
+      // 3. O token só carrega id e role, não o nome. Como o dashboard
+      //    mostra o nome do usuário, buscamos os dados completos.
+      const { id } = decodeToken(token)
+      const { data: dadosUsuario } = await UsersService.getById(id)
 
-      const userSemSenha = { ...encontrado }
+      const userSemSenha = { ...dadosUsuario }
       delete userSemSenha.password
       localStorage.setItem('sabruno_user', JSON.stringify(userSemSenha))
       setUser(userSemSenha)
+
       return true
     } catch (err) {
       setError(err.response?.data?.message || 'Não foi possível entrar. Verifique se o back-end está rodando.')
@@ -52,6 +53,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     localStorage.removeItem('sabruno_user')
+    localStorage.removeItem('sabruno_token')
     setUser(null)
   }, [])
 
