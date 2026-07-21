@@ -1,5 +1,25 @@
-http://localhost:3001/users/login
+
+//CRIAR ADMIN
 {
-  "email": "pedro@email.com",
-  "password": "123456"
+    "name": "Administrador",
+    "email": "admin@sabruno.com",
+    "password": "admin123",
+    "role": "admin"
+}
+
+//CRIAR PROFESSOR
+
+{
+    "name": "Prof. Carlos",
+    "email": "professor@sabruno.com",
+    "password": "prof123",
+    "role": "professor"
+}
+
+//CRIAR ALUNO 
+
+{
+    "name": "João da Silva",
+    "sala": 101,
+    "endereco": "Rua Exemplo, 123"
 }
