@@ -6,7 +6,12 @@ export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'aluno' })
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'aluno',
+  })
   const [saving, setSaving] = useState(false)
 
   async function loadUsuarios() {
@@ -16,14 +21,15 @@ export default function Usuarios() {
       const { data } = await UsersService.getAll()
       setUsuarios(data)
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível carregar os usuários')
+      setError(
+        err.response?.data?.message || 'Não foi possível carregar os usuários'
+      )
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- busca inicial de dados na montagem
     loadUsuarios()
   }, [])
 
@@ -42,7 +48,9 @@ export default function Usuarios() {
       setForm({ name: '', email: '', password: '', role: 'aluno' })
       await loadUsuarios()
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível cadastrar o usuário')
+      setError(
+        err.response?.data?.message || 'Não foi possível cadastrar o usuário'
+      )
     } finally {
       setSaving(false)
     }
@@ -53,12 +61,18 @@ export default function Usuarios() {
       await UsersService.remove(id)
       setUsuarios((prev) => prev.filter((u) => u.id !== id))
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível remover o usuário')
+      setError(
+        err.response?.data?.message || 'Não foi possível remover o usuário'
+      )
     }
   }
 
   const roleLabel = (role) => {
-    const labels = { admin: 'Administrador', professor: 'Professor', aluno: 'Aluno' }
+    const labels = {
+      admin: 'Administrador',
+      professor: 'Professor',
+      aluno: 'Aluno',
+    }
     return labels[role] || role
   }
 

@@ -21,14 +21,16 @@ export default function Notas() {
       setNotas(notasRes.data)
       setAlunos(alunosRes.data)
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível carregar as notas. Verifique se o back-end está rodando.')
+      setError(
+        err.response?.data?.message ||
+          'Não foi possível carregar as notas. Verifique se o back-end está rodando.'
+      )
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- busca inicial de dados na montagem
     loadData()
   }, [])
 
@@ -41,7 +43,10 @@ export default function Notas() {
 
     setSaving(true)
     try {
-      await GradesService.create({ nota: Number(form.nota), studentId: Number(form.studentId) })
+      await GradesService.create({
+        nota: Number(form.nota),
+        studentId: Number(form.studentId),
+      })
       setForm({ nota: '', studentId: '' })
       await loadData()
     } catch (err) {

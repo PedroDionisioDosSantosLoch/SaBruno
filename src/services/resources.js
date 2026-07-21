@@ -1,8 +1,5 @@
 import api from './api'
 
-// Camada fina sobre o axios, um "cliente" por recurso do back-end.
-// Cada um espelha exatamente as rotas já existentes em Back/routes/*.js
-
 export const UsersService = {
   login: (payload) => api.post('/users/login', payload),
   getAll: () => api.get('/users'),

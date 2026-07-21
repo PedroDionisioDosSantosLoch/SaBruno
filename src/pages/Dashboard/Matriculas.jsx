@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Trash2 } from 'lucide-react'
-import { EnrollmentsService, StudentsService, ClassesService } from '../../services/resources'
+import {
+  EnrollmentsService,
+  StudentsService,
+  ClassesService,
+} from '../../services/resources'
 
 export default function Matriculas() {
   const [matriculas, setMatriculas] = useState([])
@@ -24,14 +28,16 @@ export default function Matriculas() {
       setAlunos(alunosRes.data)
       setTurmas(turmasRes.data)
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível carregar as matrículas.')
+      setError(
+        err.response?.data?.message ||
+          'Não foi possível carregar as matrículas.'
+      )
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- busca inicial de dados na montagem
     loadData()
   }, [])
 
@@ -54,7 +60,9 @@ export default function Matriculas() {
       setForm({ studentId: '', classId: '' })
       await loadData()
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível criar a matrícula')
+      setError(
+        err.response?.data?.message || 'Não foi possível criar a matrícula'
+      )
     } finally {
       setSaving(false)
     }
@@ -65,7 +73,9 @@ export default function Matriculas() {
       await EnrollmentsService.remove(id)
       setMatriculas((prev) => prev.filter((m) => m.id !== id))
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível remover a matrícula')
+      setError(
+        err.response?.data?.message || 'Não foi possível remover a matrícula'
+      )
     }
   }
 
