@@ -16,14 +16,15 @@ export default function Alunos() {
       const { data } = await StudentsService.getAll()
       setAlunos(data)
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível carregar os alunos')
+      setError(
+        err.response?.data?.message || 'Não foi possível carregar os alunos'
+      )
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- busca inicial de dados na montagem
     loadAlunos()
   }, [])
 
@@ -41,7 +42,9 @@ export default function Alunos() {
       setForm({ name: '', sala: '', endereco: '' })
       await loadAlunos()
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível cadastrar o aluno')
+      setError(
+        err.response?.data?.message || 'Não foi possível cadastrar o aluno'
+      )
     } finally {
       setSaving(false)
     }
@@ -52,7 +55,9 @@ export default function Alunos() {
       await StudentsService.remove(id)
       setAlunos((prev) => prev.filter((a) => a.id !== id))
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível remover o aluno')
+      setError(
+        err.response?.data?.message || 'Não foi possível remover o aluno'
+      )
     }
   }
 

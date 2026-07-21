@@ -16,14 +16,15 @@ export default function Turmas() {
       const { data } = await ClassesService.getAll()
       setTurmas(data)
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível carregar as turmas')
+      setError(
+        err.response?.data?.message || 'Não foi possível carregar as turmas'
+      )
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- busca inicial de dados na montagem
     loadTurmas()
   }, [])
 
@@ -37,7 +38,9 @@ export default function Turmas() {
       setForm({ name: '', description: '' })
       await loadTurmas()
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível cadastrar a turma')
+      setError(
+        err.response?.data?.message || 'Não foi possível cadastrar a turma'
+      )
     } finally {
       setSaving(false)
     }
@@ -48,7 +51,9 @@ export default function Turmas() {
       await ClassesService.remove(id)
       setTurmas((prev) => prev.filter((t) => t.id !== id))
     } catch (err) {
-      setError(err.response?.data?.message || 'Não foi possível remover a turma')
+      setError(
+        err.response?.data?.message || 'Não foi possível remover a turma'
+      )
     }
   }
 
