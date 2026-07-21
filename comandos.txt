@@ -23,3 +23,83 @@
     "sala": 101,
     "endereco": "Rua Exemplo, 123"
 }
+
+
+
+// criar banco
+
+
+-- Criar o banco
+CREATE DATABASE escoladb;
+USE escoladb;
+
+-- =========================
+-- Tabela de Usuários
+-- =========================
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'teacher', 'student') DEFAULT 'student',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- =========================
+-- Tabela de Alunos
+-- =========================
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    sala INT NOT NULL,
+    endereco VARCHAR(255),
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- =========================
+-- Tabela de Turmas
+-- =========================
+CREATE TABLE classes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- =========================
+-- Matrículas
+-- =========================
+CREATE TABLE enrollments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    studentId INT NOT NULL,
+    classId INT NOT NULL,
+    enrollmentDate DATE DEFAULT (CURRENT_DATE),
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (studentId) REFERENCES students(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    FOREIGN KEY (classId) REFERENCES classes(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- =========================
+-- Notas
+-- =========================
+CREATE TABLE grades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    enrollmentId INT NOT NULL,
+    grade DECIMAL(5,2) NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (enrollmentId) REFERENCES enrollments(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
